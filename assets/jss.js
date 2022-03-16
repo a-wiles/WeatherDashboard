@@ -4,39 +4,56 @@ var enteredCityEl = document.querySelector("#enteredcity");
 var city = "";
 var forcast = document.querySelector("#forcast");
 var futureForcast = document.querySelector("#futureforcast");
-var lat = "41.8781";
-var lon = "87.6298";
+var lat = "";
+var lon = "";
 var htmlCode = "";
+
+//User City Search
+var citySearch = function (event) {
+    event.preventDefault();
+    var city = enteredCityEl.value.trim();
+    console.log("city");
+    displayWeather(city);
+
+}
 
 //API Call
 var getWeatherForcast = function (event) {
-    var apiUrl = "https://api.openweathermap.org/data/2.5/onecall?lat=" +lat+ "&lon=" +lon+ "&exclude=hourly&appid=" +apiKey+"";
+    var apiUrl = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&exclude=hourly&appid=" + apiKey + "";
 
-    fetch(apiUrl).then(function(response) {
+    fetch(apiUrl).then(function (response) {
         //If request is sucessful
         if (response.ok) {
-            response.json(). then(function(data) {
+            response.json().then(function (data) {
                 displayWeather(data);
-
-                // check if api has paginated issues
-                if (response.headers.get("Link")) {
-                    displayWarning(event);
-                }
             });
         }
         else {
             alert("Please enter a valid City");
         }
-}); 
+    });
 };
 
-var displayWeather = function () {
-//Use HTML += to add in CSS properties, or hardcode in HTML 5 day blocks?
-}
+var displayWeather = function (cityname) {
+    var apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${cityname}&appid=${apiKey}`
+
+    fetch(apiUrl).then(function (response) {
+        //If request is sucessful
+        if (response.ok) {
+            response.json().then(function (data) {
+                displayWeather(data);
+            });
+        }
+        else {
+            alert("Please enter a valid City");
+        }
+    })
+};
 
 //Event Listeners
-citySelectionEl.addEventListener("submit", getWeatherForcast);
+citySelectionEl.addEventListener("submit", citySearch);
+    
 
 
 //Final Calls
-getWeatherForcast ();
+// getWeatherForcast ();
