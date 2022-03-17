@@ -17,7 +17,7 @@ var citySearch = function (event) {
 
 //API Call
 var getWeatherForcast = function (lat, lon,cityname) {
-    var apiUrl = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&exclude=hourly&appid=" + apiKey + "";
+    var apiUrl = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&exclude=hourly&appid=" + apiKey + "&units=imperial";
 
     fetch(apiUrl).then(function (response) {
         //If request is sucessful
@@ -54,6 +54,27 @@ var getWeatherForcast = function (lat, lon,cityname) {
                 </div>
               </div>`
               document.getElementById ("forcast").innerHTML = htmlCode;
+
+              var forcastHTML = "";
+              for (var i = 0; i < 5; i++) {
+                  forcastHTML += `<div class="card mb-3" style="max-width: 540px;">
+                  <div class="row no-gutters">
+                    <div class="col-md-4">
+                      <img src="https://openweathermap.org/img/wn/${data.daily[i].weather[0].icon}@2x.png" class="card-img" alt="...">
+                    </div>
+                    <div class="col-md-8">
+                      <div class="card-body">
+                        <p class="card-text">${moment().add(i+1, "days").format("MMM Do YY")}</p>
+                        <p class="card-text">Description: ${data.daily[i].weather[0].description}</p>
+                        <p class="card-text">Temperature: ${data.daily[i].temp.day}</p>
+                        <p class="card-text">Humidity: ${data.daily[i].humidity}</p>
+                        <p class="card-text">Wind: ${data.daily[i].wind_speed}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>`
+              }
+              document.getElementById ("futureforcast").innerHTML = forcastHTML;
             });
         }
         else {
