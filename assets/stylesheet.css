@@ -1,3 +1,33 @@
 body {
     background-color: aqua;
 }
+
+.purple {
+    background-color: purple;
+    max-width: 25%;
+    color:white;
+}
+
+.red {
+    background-color: red;
+    max-width: 25%;
+    color:white;
+}
+
+.orange {
+    background-color: orange;
+    max-width: 25%;
+    color:white;
+}
+
+.yellow {
+    background-color: yellow;
+    max-width: 25%;
+    color:white;
+}
+
+.green {
+    background-color: green;
+    max-width: 25%;
+    color:white;
+}
