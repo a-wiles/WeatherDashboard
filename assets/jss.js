@@ -1,23 +1,21 @@
 var apiKey = "b48ef118561e3973171cb6d38fec2e90";
 var citySelectionEl = document.querySelector("#cityselection");
 var enteredCityEl = document.querySelector("#enteredcity");
-var city = "";
 var forcast = document.querySelector("#forcast");
 var futureForcast = document.querySelector("#futureforcast");
 var htmlCode = "";
+var listItemEl = document.querySelector("#list-group");
 
 //User City Search
 var citySearch = function (event) {
     event.preventDefault();
     var city = enteredCityEl.value.trim();
-    console.log("city");
     displayWeather(city);
-
 }
 
 //API Call
 var getWeatherForcast = function (lat, lon,cityname) {
-    var apiUrl = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&exclude=hourly&appid=" + apiKey + "&units=imperial";
+    var apiUrl = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&exclude=minute&appid=" + apiKey + "&units=imperial";
 
     fetch(apiUrl).then(function (response) {
         //If request is sucessful
@@ -37,11 +35,11 @@ var getWeatherForcast = function (lat, lon,cityname) {
                 }
 
                 var htmlCode = `<div class="card mb-3" style="max-width: 540px;">
-                <div class="row no-gutters">
+                <div class="row col-md-12" "no-gutters">
                   <div class="col-md-4">
                     <img src="https://openweathermap.org/img/wn/${data.current.weather[0].icon}@2x.png" class="card-img" alt="...">
                   </div>
-                  <div class="col-md-8">
+                  <div class="col-md-12">
                     <div class="card-body">
                       <h5 class="card-title">${cityname}</h5>
                       <p class="card-text">Description: ${data.current.weather[0].description}</p>
@@ -57,7 +55,7 @@ var getWeatherForcast = function (lat, lon,cityname) {
 
               var forcastHTML = "";
               for (var i = 0; i < 5; i++) {
-                  forcastHTML += `<div class="card mb-3" style="max-width: 540px;">
+                  forcastHTML += `<div class="card mb-3" style="max-width: 540px; col-md-4">
                   <div class="row no-gutters">
                     <div class="col-md-4">
                       <img src="https://openweathermap.org/img/wn/${data.daily[i].weather[0].icon}@2x.png" class="card-img" alt="...">
@@ -94,6 +92,13 @@ var displayWeather = function (cityname) {
               // console.log(data);
                var lat = data.coord.lat;
                var lon = data.coord.lon;
+         //       var previousSearch = JSON.parse(localStorage.getItem("weatherdashboard"));
+          //       localStorage.setItem("weatherdashboard", JSON.stringify(previousSearch));  
+
+           ////      if (cityname) {
+           //        for (i = 0; i < cityname.length; i++) {
+             //        $(".list-group").append("<p>"+ cityname[i] + "</p>");
+            //       }
                getWeatherForcast (lat, lon,cityname);
             });
         }
@@ -103,10 +108,6 @@ var displayWeather = function (cityname) {
     })
 };
 
+
 //Event Listeners
 citySelectionEl.addEventListener("submit", citySearch);
-    
-
-
-//Final Calls
-// getWeatherForcast ();

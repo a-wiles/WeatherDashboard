@@ -1,5 +1,37 @@
+:root {
+    --primary-color: #2D3047;
+    --secondary-color: #759AAB;
+    --tertiary-color: #FFDBB5;
+    --quaternary-color: #E0A458;
+}
+
 body {
-    background-color: aqua;
+    background-color: var(--secondary-color);
+}
+
+nav {
+    background-color: var(--primary-color) ;
+    color: var(--tertiary-color);
+    padding: auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    z-index: 9999;
+}
+
+.search {
+    font-weight: lighter;
+}
+
+button {
+    font-weight: lighter;
+    text-decoration: none;
+    border-radius: 15px;
+    background-color: var(--quaternary-color);
+}
+
+.cityselection {
+    margin-bottom: 25px;
 }
 
 .purple {
@@ -30,4 +62,9 @@ body {
     background-color: green;
     max-width: 25%;
     color:white;
+}
+
+.futureforcast {
+    margin: 0;
+    padding: 0;
 }

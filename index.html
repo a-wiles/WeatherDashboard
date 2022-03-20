@@ -20,15 +20,23 @@
 
   <!--Search Button-->
   <h3 class="search">Search By City:</h3>
+  <section class = "justify-space-between flex-row d-flex">
   <form id="cityselection">
     <input id="enteredcity" id="enteredcity" class="enteredcity"/>
     <button type="submit" class="searchbutton">Search</button>
   </form>
 
+  <!--Previous Search List-->
+  <div class="card" style="width: 18rem;">
+    <ul class="list-group" id="list-group">
+    </ul>
+  </div>
 
   <!--Main Display-->
   <div id="forcast" class="forcast">
   </div>
+  </section>
+
 
   <!--5 Day Display-->
   <div id="futureforcast" class="futureforcast">
