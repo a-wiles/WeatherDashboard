@@ -107,7 +107,7 @@ var historySearch = function (city) {
   var cityHistory = document.createElement("li");
   previousCityEl.appendChild(cityHistory);
   cityHistory.innerHTML = "<button class=btn-block btn-primary>" + city + "</button>";
-  var localCity = localStorage.setItem("city", JSON.stringify(city));
+  var localCity = window.localStorage.setItem("city", JSON.stringify(city));
   localStorage.getItem(JSON.parse(localCity));
   localStorage.clear()
 }

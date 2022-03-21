@@ -75,6 +75,7 @@ button {
 .futureforcast {
     margin: 0;
     padding: 0;
+    justify-content: center;
 }
 
 .totalsearch {
@@ -107,3 +108,4 @@ button {
     padding: auto;
     margin: auto;
 }
+
