@@ -19,27 +19,41 @@
   </header>
 
   <!--Search Button-->
+  <div class="totalsearch">
   <h3 class="search">Search By City:</h3>
-  <section class = "justify-space-between flex-row d-flex">
   <form id="cityselection">
     <input id="enteredcity" id="enteredcity" class="enteredcity"/>
     <button type="submit" class="searchbutton">Search</button>
   </form>
+</div>
 
   <!--Previous Search List-->
-  <div class="card" style="width: 18rem;">
+  <div class="searchcard text-center">
+    <div class="previoussearchbody">
     <ul class="list-group" id="list-group">
+      <li id="previouscity" class="previouscity">
     </ul>
   </div>
+</div>
+
+
+
+
 
   <!--Main Display-->
+
+    <div class="col-sm-12">
   <div id="forcast" class="forcast">
   </div>
-  </section>
+  </div>
+  </div>
+
 
 
   <!--5 Day Display-->
-  <div id="futureforcast" class="futureforcast">
+  <div class="col-ml-4">
+  <div id="futureforcast" class="futureforcast flex-row d-flex justify-spacebetween">
+  </div>
   </div>
 
   <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>

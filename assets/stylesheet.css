@@ -64,7 +64,46 @@ button {
     color:white;
 }
 
+.forcast {
+    padding: auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    z-index: 9999;
+}
+
 .futureforcast {
     margin: 0;
     padding: 0;
+}
+
+.totalsearch {
+    padding: auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    z-index: 9999;
+}
+
+.card {
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    z-index: 9999;
+}
+
+.searchcard {
+    border: none;
+}
+
+
+.previoussearchbody {
+    list-style: none;
+    background-color: var(--secondary-color);
+}
+
+.btn-block {
+    padding: auto;
+    margin: auto;
 }

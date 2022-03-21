@@ -4,13 +4,16 @@ var enteredCityEl = document.querySelector("#enteredcity");
 var forcast = document.querySelector("#forcast");
 var futureForcast = document.querySelector("#futureforcast");
 var htmlCode = "";
+var city = "";
 var listItemEl = document.querySelector("#list-group");
+var previousCityEl = document.querySelector("#previouscity");
 
 //User City Search
 var citySearch = function (event) {
     event.preventDefault();
     var city = enteredCityEl.value.trim();
     displayWeather(city);
+    historySearch(city);
 }
 
 //API Call
@@ -56,7 +59,7 @@ var getWeatherForcast = function (lat, lon,cityname) {
               var forcastHTML = "";
               for (var i = 0; i < 5; i++) {
                   forcastHTML += `<div class="card mb-3" style="max-width: 540px; col-md-4">
-                  <div class="row no-gutters">
+                  <div class="row no-gutters justify-space-around">
                     <div class="col-md-4">
                       <img src="https://openweathermap.org/img/wn/${data.daily[i].weather[0].icon}@2x.png" class="card-img" alt="...">
                     </div>
@@ -92,13 +95,6 @@ var displayWeather = function (cityname) {
               // console.log(data);
                var lat = data.coord.lat;
                var lon = data.coord.lon;
-         //       var previousSearch = JSON.parse(localStorage.getItem("weatherdashboard"));
-          //       localStorage.setItem("weatherdashboard", JSON.stringify(previousSearch));  
-
-           ////      if (cityname) {
-           //        for (i = 0; i < cityname.length; i++) {
-             //        $(".list-group").append("<p>"+ cityname[i] + "</p>");
-            //       }
                getWeatherForcast (lat, lon,cityname);
             });
         }
@@ -107,6 +103,14 @@ var displayWeather = function (cityname) {
         }
     })
 };
+var historySearch = function (city) {
+  var cityHistory = document.createElement("li");
+  previousCityEl.appendChild(cityHistory);
+  cityHistory.innerHTML = "<button class=btn-block btn-primary>" + city + "</button>";
+  var localCity = localStorage.setItem("city", JSON.stringify(city));
+  localStorage.getItem(JSON.parse(localCity));
+  localStorage.clear()
+}
 
 
 //Event Listeners
