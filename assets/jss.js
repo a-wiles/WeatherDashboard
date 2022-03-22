@@ -10,34 +10,34 @@ var previousCityEl = document.querySelector("#previouscity");
 
 //User City Search
 var citySearch = function (event) {
-    event.preventDefault();
-    var city = enteredCityEl.value.trim();
-    displayWeather(city);
-    historySearch(city);
+  event.preventDefault();
+  var city = enteredCityEl.value.trim();
+  displayWeather(city);
 }
+ 
 
 //API Call
-var getWeatherForcast = function (lat, lon,cityname) {
-    var apiUrl = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&exclude=minute&appid=" + apiKey + "&units=imperial";
+var getWeatherForcast = function (lat, lon, cityname) {
+  var apiUrl = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&exclude=minute&appid=" + apiKey + "&units=imperial";
 
-    fetch(apiUrl).then(function (response) {
-        //If request is sucessful
-        if (response.ok) {
-            response.json().then(function (data) {
-                console.log(data);
-                if (data.current.uvi > 11) {
-                    var uviColor = "purple"
-                } else if (data.current.uvi > 8) {
-                    var uviColor = "red"
-                } else if (data.current.uvi > 6) {
-                    var uviColor = "orange"
-                } else if (data.current.uvi > 3) {
-                    var uviColor = "yellow"
-                } else {
-                    var uviColor = "green"
-                }
+  fetch(apiUrl).then(function (response) {
+    //If request is sucessful
+    if (response.ok) {
+      response.json().then(function (data) {
+        console.log(data);
+        if (data.current.uvi > 11) {
+          var uviColor = "purple"
+        } else if (data.current.uvi > 8) {
+          var uviColor = "red"
+        } else if (data.current.uvi > 6) {
+          var uviColor = "orange"
+        } else if (data.current.uvi > 3) {
+          var uviColor = "yellow"
+        } else {
+          var uviColor = "green"
+        }
 
-                var htmlCode = `<div class="card mb-3" style="max-width: 540px;">
+        var htmlCode = `<div class="card mb-3" style="max-width: 540px;">
                 <div class="row col-md-12" "no-gutters">
                   <div class="col-md-4">
                     <img src="https://openweathermap.org/img/wn/${data.current.weather[0].icon}@2x.png" class="card-img" alt="...">
@@ -54,18 +54,18 @@ var getWeatherForcast = function (lat, lon,cityname) {
                   </div>
                 </div>
               </div>`
-              document.getElementById ("forcast").innerHTML = htmlCode;
+        document.getElementById("forcast").innerHTML = htmlCode;
 
-              var forcastHTML = "";
-              for (var i = 0; i < 5; i++) {
-                  forcastHTML += `<div class="card mb-3" style="max-width: 540px; col-md-4">
+        var forcastHTML = "";
+        for (var i = 0; i < 5; i++) {
+          forcastHTML += `<div class="card mb-3" style="max-width: 540px; col-md-4">
                   <div class="row no-gutters justify-space-around">
                     <div class="col-md-4">
                       <img src="https://openweathermap.org/img/wn/${data.daily[i].weather[0].icon}@2x.png" class="card-img" alt="...">
                     </div>
                     <div class="col-md-8">
                       <div class="card-body">
-                        <p class="card-text">${moment().add(i+1, "days").format("MMM Do YY")}</p>
+                        <p class="card-text">${moment().add(i + 1, "days").format("MMM Do YY")}</p>
                         <p class="card-text">Description: ${data.daily[i].weather[0].description}</p>
                         <p class="card-text">Temperature: ${data.daily[i].temp.day}</p>
                         <p class="card-text">Humidity: ${data.daily[i].humidity}</p>
@@ -74,44 +74,55 @@ var getWeatherForcast = function (lat, lon,cityname) {
                     </div>
                   </div>
                 </div>`
-              }
-              document.getElementById ("futureforcast").innerHTML = forcastHTML;
-            });
         }
-        else {
-            alert("Please enter a valid City");
-        }
-    });
+        document.getElementById("futureforcast").innerHTML = forcastHTML;
+      });
+    }
+    else {
+      alert("Please enter a valid City");
+    }
+  });
 };
 
 var displayWeather = function (cityname) {
-    var apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${cityname}&appid=${apiKey}`
+  var apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${cityname}&appid=${apiKey}`
 
-    fetch(apiUrl).then(function (response) {
+  fetch(apiUrl).then(function (response) {
 
-        //If request is sucessful
-        if (response.ok) {
-            response.json().then(function (data) {
-              // console.log(data);
-               var lat = data.coord.lat;
-               var lon = data.coord.lon;
-               getWeatherForcast (lat, lon,cityname);
-            });
+    //If request is sucessful
+    if (response.ok) {
+      response.json().then(function (data) {
+        // console.log(data);
+        var lat = data.coord.lat;
+        var lon = data.coord.lon;
+        getWeatherForcast(lat, lon, cityname);
+        var previousSearch = JSON.parse(localStorage.getItem("city")) || [];
+        if (previousSearch.indexOf(cityname) == -1) {
+          previousSearch.push(cityname);
+          localStorage.setItem("city", JSON.stringify(previousSearch));
+          historySearch()
         }
-        else {
-            alert("Please enter a valid City");
-        }
-    })
+      });
+    }
+    else {
+      alert("Please enter a valid City");
+    }
+  })
 };
 var historySearch = function (city) {
-  var cityHistory = document.createElement("li");
-  previousCityEl.appendChild(cityHistory);
-  cityHistory.innerHTML = "<button class=btn-block btn-primary>" + city + "</button>";
-  var localCity = window.localStorage.setItem("city", JSON.stringify(city));
-  localStorage.getItem(JSON.parse(localCity));
-  localStorage.clear()
+  var previousSearch = JSON.parse(localStorage.getItem("city")) || [];
+  previousCityEl.innerHTML = ""
+  for (let i = 0; i < previousSearch.length; i++) {
+    var cityHistory = document.createElement("li");
+    previousCityEl.appendChild(cityHistory);
+    cityHistory.innerHTML = "<button class=btn-block btn-primary>" + previousSearch[i] + "</button>";
+  }
+  //var localCity = localStorage.setItem("city", JSON.stringify(city)) || [];
+  //localStorage.getItem(JSON.parse(localCity));
+  // localStorage.clear()
 }
 
 
 //Event Listeners
 citySelectionEl.addEventListener("submit", citySearch);
+historySearch(city);
